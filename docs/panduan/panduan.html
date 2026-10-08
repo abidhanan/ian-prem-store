@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<title>Panduan Penggunaan IanPrem Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  @page { size: A4; margin: 16mm 15mm 18mm; }
+  @page cover { margin: 0; }
+  :root {
+    --ink: #1a1530; --muted: #5d5873; --soft: #8a86a0; --line: #e7e4f0; --bg-soft: #f7f5fc;
+    --violet: #7c3aed; --fuchsia: #c026d3; --pink: #db2777; --green: #059669; --amber: #d97706; --red: #dc2626; --sky: #0284c7;
+    --grad: linear-gradient(135deg, #8b5cf6, #d946ef 55%, #ec4899);
+  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: var(--ink); font-size: 10.2pt; line-height: 1.6; }
+  h1, h2, h3, h4 { font-family: "Sora", "Plus Jakarta Sans", sans-serif; line-height: 1.25; margin: 0; }
+  p { margin: 0 0 3mm; }
+  code, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.88em; }
+  code { background: #f1edfb; color: #6d28d9; padding: 0.15em 0.4em; border-radius: 4px; }
+  a { color: var(--violet); text-decoration: none; }
+  b, strong { font-weight: 700; }
+
+  /* ---------- Sampul ---------- */
+  .cover { page: cover; height: 297mm; width: 210mm; position: relative; overflow: hidden; background: #0b0816; color: #fff; break-after: page; }
+  .cover .blob { position: absolute; border-radius: 50%; filter: blur(60px); }
+  .cover .b1 { width: 130mm; height: 130mm; background: #7c3aed; opacity: .55; left: -30mm; top: -30mm; }
+  .cover .b2 { width: 120mm; height: 120mm; background: #db2777; opacity: .35; right: -40mm; top: 70mm; }
+  .cover .b3 { width: 110mm; height: 110mm; background: #0891b2; opacity: .25; left: 30mm; bottom: -40mm; }
+  .cover .grid { position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 12mm 12mm; }
+  .cover .inner { position: relative; padding: 24mm 20mm; height: 100%; display: flex; flex-direction: column; }
+  .brand { display: flex; align-items: center; gap: 4mm; }
+  .brand img { width: 14mm; height: 14mm; }
+  .brand span { font-family: Sora; font-weight: 700; font-size: 17pt; }
+  .brand span i { font-style: normal; background: linear-gradient(90deg, #c4b5fd, #f0abfc, #67e8f9); -webkit-background-clip: text; color: transparent; }
+  .cover h1 { font-size: 40pt; font-weight: 800; letter-spacing: -0.02em; margin-top: 34mm; }
+  .cover h1 em { font-style: normal; background: linear-gradient(90deg, #c4b5fd, #f0abfc, #67e8f9); -webkit-background-clip: text; color: transparent; }
+  .cover .lead { font-size: 13pt; color: rgba(255,255,255,.75); max-width: 140mm; margin-top: 6mm; }
+  .cover .chips { display: flex; gap: 3mm; margin-top: 10mm; }
+  .cover .chip { border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); border-radius: 99px; padding: 2mm 5mm; font-size: 10pt; font-weight: 600; }
+  .cover .shots { position: absolute; right: 18mm; bottom: 44mm; display: flex; gap: 5mm; align-items: flex-end; }
+  .cover .shots .scr { max-height: 76mm; }
+  .cover .shots .phone { width: 42mm; transform: rotate(-4deg); }
+  .cover .shots .phone:nth-child(2) { width: 46mm; transform: rotate(3deg) translateY(-4mm); }
+  .cover .meta { margin-top: auto; display: grid; grid-template-columns: repeat(3, auto); gap: 8mm; justify-content: start; font-size: 9.5pt; color: rgba(255,255,255,.6); }
+  .cover .meta b { display: block; color: #fff; font-size: 10.5pt; }
+
+  /* ---------- Umum ---------- */
+  .part { break-before: page; }
+  .part-head { background: var(--grad); color: #fff; border-radius: 6mm; padding: 9mm 10mm; margin-bottom: 8mm; position: relative; overflow: hidden; }
+  .part-head::after { content: ""; position: absolute; right: -15mm; top: -20mm; width: 70mm; height: 70mm; border-radius: 50%; background: rgba(255,255,255,.12); }
+  .part-head small { font-weight: 700; letter-spacing: .2em; text-transform: uppercase; font-size: 8.5pt; opacity: .85; }
+  .part-head h1 { font-size: 24pt; margin-top: 1.5mm; }
+  .part-head p { margin: 2mm 0 0; opacity: .9; max-width: 150mm; }
+  section.ch { margin-bottom: 7mm; }
+  h2, h3 { break-after: avoid; }
+  .ch h2 { font-size: 15pt; display: flex; align-items: center; gap: 3mm; margin: 2mm 0 3.5mm; }
+  .ch h2 .num { display: inline-grid; place-items: center; min-width: 9mm; height: 9mm; padding: 0 2mm; border-radius: 2.5mm; background: var(--grad); color: #fff; font-size: 10pt; }
+  .ch h3 { font-size: 11.5pt; margin: 5mm 0 2mm; color: #2b2250; }
+  .muted { color: var(--muted); }
+  .newpage { break-before: page; }
+  .avoid { break-inside: avoid; }
+
+  /* Langkah bernomor */
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 2mm 0 4mm; }
+  ol.steps > li { counter-increment: s; position: relative; padding: 0 0 3mm 11mm; break-inside: avoid; }
+  ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0.2mm; width: 7mm; height: 7mm; border-radius: 50%; background: #efe9fd; color: var(--violet); font-weight: 800; font-size: 9pt; display: grid; place-items: center; }
+  ol.steps > li:not(:last-child)::after { content: ""; position: absolute; left: 3.4mm; top: 8mm; bottom: 0.5mm; width: 0.3mm; background: #e4dcfa; }
+  ol.steps > li b:first-child { color: #231a45; }
+  ul.dots { padding-left: 5mm; margin: 1mm 0 3mm; }
+  ul.dots li { margin-bottom: 1mm; }
+  ul.dots li::marker { color: var(--fuchsia); }
+
+  /* Callout */
+  .note { border-radius: 3.5mm; padding: 3.5mm 4.5mm 3.5mm 12mm; margin: 3mm 0 4mm; position: relative; break-inside: avoid; font-size: 9.6pt; }
+  .note::before { position: absolute; left: 4mm; top: 3.2mm; font-size: 11pt; }
+  .note.tip { background: #ecfdf5; border: 1px solid #a7f3d0; } .note.tip::before { content: "💡"; }
+  .note.warn { background: #fffbeb; border: 1px solid #fde68a; } .note.warn::before { content: "⚠️"; }
+  .note.info { background: #f5f3ff; border: 1px solid #ddd6fe; } .note.info::before { content: "ℹ️"; }
+  .note.danger { background: #fef2f2; border: 1px solid #fecaca; } .note.danger::before { content: "⛔"; }
+  .note b.t { display: block; margin-bottom: .5mm; }
+
+  /* Tabel */
+  table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 2mm 0 4mm; font-size: 9.2pt; break-inside: auto; border: 1px solid var(--line); border-radius: 3mm; overflow: hidden; }
+  th { background: var(--bg-soft); text-align: left; font-weight: 700; color: #3b3160; padding: 2.4mm 3mm; border-bottom: 1px solid var(--line); }
+  td { padding: 2.2mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  tr { break-inside: avoid; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  .pill { display: inline-block; padding: .3mm 2.4mm; border-radius: 99px; font-size: 8.4pt; font-weight: 700; white-space: nowrap; }
+  .pill.amber { background: #fef3c7; color: #92400e; } .pill.green { background: #d1fae5; color: #065f46; } .pill.red { background: #fee2e2; color: #991b1b; } .pill.violet { background: #ede9fe; color: #5b21b6; }
+  .yes { color: var(--green); font-weight: 800; } .no { color: #c4c0d4; font-weight: 800; }
+
+  /* Gambar */
+  figure { margin: 3mm 0 5mm; break-inside: avoid; }
+  figcaption { font-size: 8.6pt; color: var(--soft); text-align: center; margin-top: 2mm; }
+  .browser { border-radius: 3mm; overflow: hidden; border: 1px solid #d9d4e8; box-shadow: 0 3mm 8mm rgba(40, 20, 90, .12); background: #0b0816; }
+  .browser .bar { height: 6mm; background: #1c1729; display: flex; align-items: center; gap: 1.4mm; padding: 0 3mm; }
+  .browser .bar i { width: 2.2mm; height: 2.2mm; border-radius: 50%; background: #ff5f57; } .browser .bar i:nth-child(2) { background: #febc2e; } .browser .bar i:nth-child(3) { background: #28c840; }
+  .browser .bar span { margin-left: 3mm; background: #2a2440; color: #a9a3c2; font-size: 7pt; border-radius: 99px; padding: .4mm 4mm; font-family: "JetBrains Mono"; }
+  .browser img { display: block; width: 100%; }
+  .browser.crop img { height: 95mm; object-fit: cover; object-position: top; }
+  .phones { display: flex; justify-content: center; gap: 7mm; align-items: flex-start; margin: 3mm 0 5mm; break-inside: avoid; }
+  .phones figure { margin: 0; }
+  .phone { width: 52mm; border-radius: 8mm; padding: 2mm; background: #16121f; box-shadow: 0 3mm 8mm rgba(40, 20, 90, .18), inset 0 0 0 .4mm #3a3350; }
+  .phone .scr { border-radius: 6.2mm; overflow: hidden; max-height: 108mm; background: #07060d; }
+  .phone img { display: block; width: 100%; }
+  .panel { border-radius: 4mm; overflow: hidden; box-shadow: 0 3mm 8mm rgba(40, 20, 90, .16); border: 1px solid #2a2440; background: #0b0816; }
+  .panel img { display: block; width: 100%; }
+  .side { display: grid; grid-template-columns: 1fr 58mm; gap: 7mm; align-items: start; break-inside: avoid; }
+  .side.rev { grid-template-columns: 58mm 1fr; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; align-items: start; }
+
+  /* Alur */
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.5mm; margin: 4mm 0 5mm; break-inside: avoid; }
+  .flow div { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 3.5mm; padding: 3.5mm 3mm; text-align: center; position: relative; }
+  .flow div:not(:last-child)::after { content: "➜"; position: absolute; right: -2.6mm; top: 50%; transform: translate(50%, -50%); color: var(--fuchsia); font-size: 10pt; z-index: 1; }
+  .flow .ic { font-size: 16pt; }
+  .flow b { display: block; font-size: 9pt; margin-top: 1mm; }
+  .flow small { display: block; color: var(--muted); font-size: 7.8pt; line-height: 1.4; margin-top: .8mm; }
+  .flow .who { display: inline-block; margin-top: 1.5mm; font-size: 7pt; font-weight: 700; border-radius: 99px; padding: .2mm 2mm; }
+  .who.u { background: #e0f2fe; color: #075985; } .who.a { background: #fce7f3; color: #9d174d; }
+
+  /* Chat WA */
+  .wa { background: #e7ddd3; border-radius: 4mm; padding: 5mm; break-inside: avoid; }
+  .wa .bubble { background: #d9fdd3; border-radius: 3mm 0 3mm 3mm; padding: 3mm 4mm; margin-left: auto; max-width: 115mm; font-size: 9pt; line-height: 1.55; box-shadow: 0 .3mm .6mm rgba(0,0,0,.12); white-space: pre-line; }
+  .wa .bubble.in { background: #fff; border-radius: 0 3mm 3mm 3mm; margin-left: 0; margin-top: 3mm; }
+  .wa .time { display: block; text-align: right; font-size: 7pt; color: #667781; margin-top: 1mm; }
+
+  /* Mock UI (halaman yang butuh login) */
+  .mock { background: #0b0816; border-radius: 5mm; padding: 5mm; color: #e9e7f2; font-size: 8.6pt; break-inside: avoid; box-shadow: 0 3mm 8mm rgba(40, 20, 90, .18); }
+  .mock .row { display: flex; justify-content: space-between; align-items: center; gap: 3mm; }
+  .mock .card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 3mm; padding: 3mm; margin-top: 2.5mm; }
+  .mock .t { font-family: Sora; font-weight: 700; color: #fff; }
+  .mock .s { color: rgba(255,255,255,.45); font-size: 7.6pt; }
+  .mock .badge { border-radius: 99px; padding: .3mm 2mm; font-size: 7pt; font-weight: 700; }
+  .mock .b-amber { background: rgba(245,158,11,.15); color: #fcd34d; } .mock .b-green { background: rgba(16,185,129,.15); color: #6ee7b7; } .mock .b-red { background: rgba(239,68,68,.15); color: #fca5a5; }
+  .mock .acc { border: 1px solid rgba(16,185,129,.25); background: linear-gradient(135deg, rgba(16,185,129,.1), transparent); border-radius: 3.5mm; padding: 3.5mm; margin-top: 2.5mm; }
+  .mock .field { background: rgba(0,0,0,.3); border-radius: 2mm; padding: 1.6mm 2.5mm; margin-top: 1.6mm; display: flex; justify-content: space-between; align-items: center; }
+  .mock .field small { display: block; font-size: 6.4pt; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.4); font-weight: 700; }
+  .mock .field span { font-family: "JetBrains Mono"; font-size: 8pt; color: #fff; }
+  .mock .copy { width: 5mm; height: 5mm; border: 1px solid rgba(255,255,255,.15); border-radius: 1.3mm; display: grid; place-items: center; font-size: 6.5pt; color: rgba(255,255,255,.6); }
+  .mock .btn { border-radius: 2mm; padding: 1.8mm 3mm; font-weight: 700; font-size: 8pt; text-align: center; }
+  .mock .btn-wa { background: linear-gradient(90deg, #10b981, #22c55e); color: #fff; }
+  .mock .btn-ghost { border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.8); }
+  .mock .banner { border: 1px solid rgba(245,158,11,.25); background: rgba(245,158,11,.08); border-radius: 3.5mm; padding: 3.5mm; margin-top: 2.5mm; }
+
+  /* Daftar isi */
+  .toc { columns: 2; column-gap: 10mm; margin-top: 4mm; }
+  .toc .grp { break-inside: avoid; margin-bottom: 5mm; }
+  .toc h4 { font-size: 10.5pt; color: var(--violet); margin-bottom: 1.5mm; }
+  .toc a { display: flex; gap: 2mm; color: var(--ink); padding: 1mm 0; border-bottom: 1px dashed var(--line); font-size: 9.6pt; }
+  .toc a span { color: var(--soft); min-width: 8mm; font-weight: 700; }
+  .kbd { display: inline-block; border: 1px solid #d7d1e8; border-bottom-width: 2px; border-radius: 1.5mm; padding: 0 1.8mm; font-size: 8.6pt; font-weight: 700; background: #fff; white-space: nowrap; }
+  .sqlbox { background: #14111f; color: #e9e7f2; border-radius: 3mm; padding: 3.5mm 4.5mm; font-family: "JetBrains Mono"; font-size: 8.8pt; break-inside: avoid; margin: 2mm 0 4mm; white-space: pre-wrap; }
+  .sqlbox .k { color: #f0abfc; } .sqlbox .s { color: #86efac; } .sqlbox .c { color: #7c7796; }
+</style>
+</head>
+<body>
+
+<!-- ======================= SAMPUL ======================= -->
+<div class="cover">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="grid"></div>
+  <div class="inner">
+    <div class="brand"><img src="../../src/app/icon.svg" alt="" /><span>IanPrem <i>Store</i></span></div>
+    <h1>Panduan<br />Penggunaan <em>Website</em></h1>
+    <p class="lead">Panduan lengkap untuk <b>Pembeli</b> dan <b>Admin</b>: mulai dari mendaftar, membeli akun premium, hingga mengelola produk, gudang akun, transaksi, dan dashboard.</p>
+    <div class="chips"><span class="chip">👤 Panduan Pembeli</span><span class="chip">🛡️ Panduan Admin</span><span class="chip">📱 Desktop &amp; HP</span></div>
+    <div class="shots">
+      <div class="phone"><div class="scr"><img src="img/home-mobile.jpg" alt="" /></div></div>
+      <div class="phone"><div class="scr"><img src="img/dashboard-mobile.jpg" alt="" /></div></div>
+    </div>
+    <div class="meta">
+      <div>Website<b>ian-prem-store.vercel.app</b></div>
+      <div>WhatsApp Admin<b>+62 889-8008-1680</b></div>
+      <div>Versi<b>September 2026</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= DAFTAR ISI ======================= -->
+<div>
+  <h1 style="font-size:22pt">Daftar Isi</h1>
+  <p class="muted">Klik judul untuk langsung menuju bagian tersebut.</p>
+  <div class="toc">
+    <div class="grp">
+      <h4>Pendahuluan</h4>
+      <a href="#p1"><span>1</span>Mengenal IanPrem Store</a>
+      <a href="#p2"><span>2</span>Peran: Pengunjung, Pembeli &amp; Admin</a>
+      <a href="#p3"><span>3</span>Alur Transaksi dari Awal sampai Akhir</a>
+    </div>
+    <div class="grp">
+      <h4>Bagian A: Panduan Pembeli</h4>
+      <a href="#u1"><span>A1</span>Menjelajah Produk Tanpa Login</a>
+      <a href="#u2"><span>A2</span>Membuat Akun &amp; Masuk</a>
+      <a href="#u3"><span>A3</span>Membaca Halaman Detail Produk</a>
+      <a href="#u4"><span>A4</span>Membeli Produk (Checkout)</a>
+      <a href="#u5"><span>A5</span>Membayar via WhatsApp</a>
+      <a href="#u6"><span>A6</span>Pesanan Saya &amp; Menerima Akun</a>
+      <a href="#u7"><span>A7</span>Membatalkan Pesanan</a>
+      <a href="#u8"><span>A8</span>Tips Aman &amp; Pertanyaan Umum</a>
+    </div>
+    <div class="grp">
+      <h4>Bagian B: Panduan Admin</h4>
+      <a href="#a1"><span>B1</span>Menjadi Admin &amp; Masuk ke Panel</a>
+      <a href="#a2"><span>B2</span>Checklist Menyiapkan Toko</a>
+      <a href="#a3"><span>B3</span>Mengelola Kategori</a>
+      <a href="#a4"><span>B4</span>Mengelola Produk</a>
+      <a href="#a5"><span>B5</span>Gudang Akun (Stok)</a>
+      <a href="#a6"><span>B6</span>Memproses Transaksi</a>
+      <a href="#a7"><span>B7</span>Membaca Dashboard &amp; Grafik</a>
+      <a href="#a8"><span>B8</span>Tips Operasional Harian</a>
+    </div>
+    <div class="grp">
+      <h4>Lampiran</h4>
+      <a href="#l1"><span>L1</span>Pemecahan Masalah</a>
+      <a href="#l2"><span>L2</span>Ringkasan Status Pesanan</a>
+    </div>
+  </div>
+
+  <div class="note info" style="margin-top:8mm"><b class="t">Tentang gambar di panduan ini</b>Screenshot diambil langsung dari website. Nama, produk, dan angka di dalamnya hanyalah <b>data contoh</b> untuk ilustrasi, jadi isinya akan berbeda dengan data di toko Anda.</div>
+</div>
+
+<!-- ======================= PENDAHULUAN ======================= -->
+<div class="part">
+  <div class="part-head"><small>Pendahuluan</small><h1>Mengenal Website</h1><p>Gambaran singkat cara kerja IanPrem Store sebelum masuk ke langkah-langkah detail.</p></div>
+
+  <section class="ch" id="p1">
+    <h2><span class="num">1</span>Mengenal IanPrem Store</h2>
+    <p><b>IanPrem Store</b> adalah toko online untuk jual beli akun aplikasi premium seperti Netflix, Spotify, Canva, ChatGPT, dan lainnya. Ada tiga hal yang perlu diketahui:</p>
+    <ul class="dots">
+      <li><b>Katalog terbuka untuk umum.</b> Siapa pun bisa melihat kategori, produk, harga, dan stok tanpa perlu login.</li>
+      <li><b>Pembayaran manual lewat WhatsApp.</b> Setelah pesanan dibuat, pembeli diarahkan ke WhatsApp admin (<b>+62 889-8008-1680</b>) untuk membayar. Admin mengonfirmasi pembayaran secara manual.</li>
+      <li><b>Akun dikirim otomatis ke akun pembeli.</b> Begitu admin menekan tombol <i>Konfirmasi</i>, sistem mengambil akun dari Gudang Akun dan menampilkannya di menu <b>Pesanan Saya</b> milik pembeli.</li>
+    </ul>
+    <figure>
+      <div class="browser"><div class="bar"><i></i><i></i><i></i><span>ian-prem-store.vercel.app</span></div><img src="img/home-desktop.jpg" alt="" /></div>
+      <figcaption>Gambar 1. Halaman beranda IanPrem Store (tampilan desktop)</figcaption>
+    </figure>
+  </section>
+
+  <section class="ch newpage" id="p2">
+    <h2><span class="num">2</span>Peran: Pengunjung, Pembeli &amp; Admin</h2>
+    <p>Website memiliki dua peran akun, yaitu <b>User (Pembeli)</b> dan <b>Admin</b>. Orang yang belum login disebut <b>Pengunjung</b>.</p>
+    <table>
+      <tr><th>Fitur</th><th style="text-align:center">Pengunjung</th><th style="text-align:center">Pembeli</th><th style="text-align:center">Admin</th></tr>
+      <tr><td>Melihat kategori, produk, harga &amp; stok</td><td align="center" class="yes">✓</td><td align="center" class="yes">✓</td><td align="center" class="yes">✓</td></tr>
+      <tr><td>Mencari &amp; memfilter produk</td><td align="center" class="yes">✓</td><td align="center" class="yes">✓</td><td align="center" class="yes">✓</td></tr>
+      <tr><td>Membuat pesanan (checkout)</td><td align="center" class="no">✕</td><td align="center" class="yes">✓</td><td align="center" class="yes">✓</td></tr>
+      <tr><td>Melihat Pesanan Saya &amp; menerima akun</td><td align="center" class="no">✕</td><td align="center" class="yes">✓</td><td align="center" class="yes">✓</td></tr>
+      <tr><td>Membatalkan pesanan sendiri (masih menunggu)</td><td align="center" class="no">✕</td><td align="center" class="yes">✓</td><td align="center" class="yes">✓</td></tr>
+      <tr><td>Kelola kategori &amp; produk</td><td align="center" class="no">✕</td><td align="center" class="no">✕</td><td align="center" class="yes">✓</td></tr>
+      <tr><td>Kelola Gudang Akun (stok)</td><td align="center" class="no">✕</td><td align="center" class="no">✕</td><td align="center" class="yes">✓</td></tr>
+      <tr><td>Konfirmasi / batalkan transaksi semua pembeli</td><td align="center" class="no">✕</td><td align="center" class="no">✕</td><td align="center" class="yes">✓</td></tr>
+      <tr><td>Dashboard, grafik &amp; riwayat transaksi</td><td align="center" class="no">✕</td><td align="center" class="no">✕</td><td align="center" class="yes">✓</td></tr>
+    </table>
+    <div class="note info"><b class="t">Keamanan data</b>Aturan akses dijaga langsung di database. Pembeli <b>hanya</b> bisa melihat akun dari pesanannya sendiri yang sudah selesai. Harga dan stok dihitung di server, sehingga tidak bisa diubah dari browser.</div>
+
+    <h2 id="p3" style="margin-top:8mm"><span class="num">3</span>Alur Transaksi dari Awal sampai Akhir</h2>
+    <div class="flow">
+      <div><div class="ic">🛍️</div><b>Pilih Produk</b><small>Lihat katalog &amp; detail produk</small><span class="who u">Pembeli</span></div>
+      <div><div class="ic">🧾</div><b>Buat Pesanan</b><small>Login lalu klik <i>Beli Sekarang</i></small><span class="who u">Pembeli</span></div>
+      <div><div class="ic">💬</div><b>Bayar via WA</b><small>Chat admin dengan kode pesanan</small><span class="who u">Pembeli</span></div>
+      <div><div class="ic">✅</div><b>Konfirmasi</b><small>Cek dana masuk lalu klik <i>Konfirmasi</i></small><span class="who a">Admin</span></div>
+      <div><div class="ic">🔑</div><b>Akun Terkirim</b><small>Muncul di <i>Pesanan Saya</i></small><span class="who u">Pembeli</span></div>
+    </div>
+    <table>
+      <tr><th>Status</th><th>Arti</th><th>Siapa yang mengubah</th></tr>
+      <tr><td><span class="pill amber">⏱ Menunggu</span></td><td>Pesanan sudah dibuat dan menunggu pembayaran atau konfirmasi admin.</td><td>Otomatis saat pembeli checkout</td></tr>
+      <tr><td><span class="pill green">✓ Selesai</span></td><td>Pembayaran dikonfirmasi dan akun sudah terkirim ke pembeli.</td><td>Admin (tombol <i>Konfirmasi</i>)</td></tr>
+      <tr><td><span class="pill red">✕ Dibatalkan</span></td><td>Pesanan dibatalkan dan tidak diproses.</td><td>Admin, atau pembeli selama status masih <i>Menunggu</i></td></tr>
+    </table>
+  </section>
+</div>
+
+<!-- ======================= BAGIAN A: PEMBELI ======================= -->
+<div class="part">
+  <div class="part-head"><small>Bagian A</small><h1>Panduan Pembeli</h1><p>Untuk pelanggan yang ingin membeli akun premium: dari melihat produk sampai menerima akun.</p></div>
+
+  <section class="ch" id="u1">
+    <h2><span class="num">A1</span>Menjelajah Produk Tanpa Login</h2>
+    <p>Kamu bisa melihat semua produk <b>tanpa perlu login</b>. Buka <b>ian-prem-store.vercel.app</b> di browser HP atau komputer.</p>
+    <div class="side">
+      <div>
+        <h3>Beranda</h3>
+        <ul class="dots">
+          <li><b>Belanja Sekarang</b> membuka katalog semua produk.</li>
+          <li><b>Kategori</b> (Streaming Film, Musik, dll.) menampilkan produk sesuai kelompoknya.</li>
+          <li><b>Produk Paling Diminati</b> berisi produk unggulan (label 🔥 <i>Hot</i>).</li>
+          <li><b>Cara Order</b> dan <b>FAQ</b> menjawab pertanyaan umum.</li>
+          <li>Tombol hijau <b>WhatsApp</b> di pojok kanan bawah untuk bertanya langsung ke admin.</li>
+        </ul>
+        <h3>Katalog &amp; Pencarian</h3>
+        <ol class="steps">
+          <li><b>Buka menu Produk</b> di bagian atas. Di HP, ketuk ikon <span class="kbd">☰</span> lalu pilih <i>Produk</i>.</li>
+          <li><b>Ketik nama aplikasi</b> di kolom pencarian (misal "Netflix"), lalu tekan <span class="kbd">Cari</span>.</li>
+          <li><b>Pilih kategori</b> dengan mengetuk salah satu chip di bawah kolom pencarian. Di HP, geser chip ke kiri untuk melihat kategori lainnya.</li>
+          <li><b>Ketuk kartu produk</b> untuk membuka detailnya.</li>
+        </ol>
+      </div>
+      <figure><div class="phone"><div class="scr"><img src="img/products-mobile.jpg" alt="" /></div></div><figcaption>Gambar 2. Katalog produk di HP</figcaption></figure>
+    </div>
+    <h3>Membaca kartu produk</h3>
+    <table>
+      <tr><th>Elemen</th><th>Keterangan</th></tr>
+      <tr><td>Label <span class="pill red">-35%</span></td><td>Besar diskon dibandingkan harga coret (harga normal).</td></tr>
+      <tr><td>Label <span class="pill amber">🔥 Hot</span></td><td>Produk unggulan pilihan admin.</td></tr>
+      <tr><td>🕐 1 Bulan</td><td>Durasi atau masa aktif akun.</td></tr>
+      <tr><td>📦 Stok 12</td><td>Jumlah akun yang siap dikirim. Jika <b>Stok Habis</b>, produk belum bisa dibeli.</td></tr>
+      <tr><td>Harga tebal</td><td>Harga yang kamu bayar. Harga yang dicoret adalah harga normal.</td></tr>
+    </table>
+    <div class="phones">
+      <figure><div class="phone"><div class="scr"><img src="img/home-mobile.jpg" alt="" /></div></div><figcaption>Beranda</figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/categories-mobile.jpg" alt="" /></div></div><figcaption>Daftar kategori</figcaption></figure>
+      <figure><div class="phone"><div class="scr" style="max-height:62mm"><img src="img/mobile-menu.jpg" alt="" /></div></div><figcaption>Menu ☰ di HP</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="ch newpage" id="u2">
+    <h2><span class="num">A2</span>Membuat Akun &amp; Masuk</h2>
+    <p>Akun diperlukan agar akun premium yang kamu beli bisa dikirim dengan aman <b>hanya ke kamu</b>. Pendaftaran gratis.</p>
+    <div class="side">
+      <div>
+        <h3>Daftar akun baru</h3>
+        <ol class="steps">
+          <li><b>Klik tombol Daftar</b> di pojok kanan atas.</li>
+          <li><b>Isi Nama Lengkap</b> agar admin mudah mengenali pesananmu.</li>
+          <li><b>Isi No. WhatsApp aktif</b>, contoh <code>08123456789</code>. Admin bisa menghubungimu lewat nomor ini.</li>
+          <li><b>Isi Email</b> dan <b>Password</b> (minimal 6 karakter). Ketuk ikon 👁 untuk melihat password yang diketik.</li>
+          <li><b>Klik Daftar Sekarang.</b> Kamu otomatis masuk. Jika mendaftar dari halaman produk, kamu langsung dikembalikan ke produk tersebut.</li>
+        </ol>
+        <div class="note warn"><b class="t">Muncul "Cek Email Kamu"?</b>Artinya toko mewajibkan konfirmasi email. Buka inbox (cek juga folder Spam), klik link konfirmasi, lalu login.</div>
+        <h3>Masuk (login)</h3>
+        <ol class="steps">
+          <li>Klik <b>Masuk</b> di pojok kanan atas. Di HP, ada di menu <span class="kbd">☰</span>.</li>
+          <li>Isi email dan password, lalu klik <b>Masuk</b>.</li>
+          <li>Setelah login, ikon profil (inisial nama) muncul di kanan atas. Ketuk ikon itu untuk membuka <b>Pesanan Saya</b> atau <b>Keluar</b>.</li>
+        </ol>
+      </div>
+      <div>
+        <figure><div class="phone"><div class="scr"><img src="img/register-mobile.jpg" alt="" /></div></div><figcaption>Gambar 3. Form daftar</figcaption></figure>
+      </div>
+    </div>
+    <div class="note tip"><b class="t">Lupa sedang login atau belum?</b>Jika kamu membuka halaman yang butuh login (misalnya Pesanan Saya), website otomatis mengarahkanmu ke halaman Masuk. Setelah login, kamu dikembalikan ke halaman tadi.</div>
+  </section>
+
+  <section class="ch newpage" id="u3">
+    <h2><span class="num">A3</span>Membaca Halaman Detail Produk</h2>
+    <figure>
+      <div class="browser crop"><div class="bar"><i></i><i></i><i></i><span>ian-prem-store.vercel.app/products/netflix-premium-sharing</span></div><img src="img/detail-desktop.jpg" alt="" /></div>
+      <figcaption>Gambar 4. Halaman detail produk (desktop). Panel beli ada di sebelah kanan.</figcaption>
+    </figure>
+    <table>
+      <tr><th>Bagian</th><th>Isi</th></tr>
+      <tr><td>Nama &amp; kategori</td><td>Nama produk dan kelompoknya.</td></tr>
+      <tr><td>Durasi · Stok · Terjual</td><td>Masa aktif, jumlah akun tersedia, dan jumlah yang sudah terjual.</td></tr>
+      <tr><td>Deskripsi</td><td>Penjelasan produk dan aturan pemakaian dari admin. <b>Baca sebelum membeli.</b></td></tr>
+      <tr><td>Keunggulan</td><td>Daftar kelebihan produk, misalnya kualitas 4K atau garansi.</td></tr>
+      <tr><td>Yang akan kamu terima</td><td>Data akun yang akan dikirim, misalnya Email, Password, Profil, PIN, atau Link Akses.</td></tr>
+      <tr><td>Panel beli</td><td>Harga, jumlah, catatan, total bayar, dan tombol beli. Di HP, panel ini ada tepat di bawah info produk.</td></tr>
+    </table>
+  </section>
+
+  <section class="ch newpage" id="u4">
+    <h2><span class="num">A4</span>Membeli Produk (Checkout)</h2>
+    <div class="side rev">
+      <figure><div class="phone"><div class="scr"><img src="img/buy-loggedin.jpg" alt="" /></div></div><figcaption>Gambar 5. Panel beli (sudah login)</figcaption></figure>
+      <div>
+        <ol class="steps">
+          <li><b>Buka detail produk</b> yang ingin dibeli dan pastikan stoknya tersedia.</li>
+          <li><b>Atur jumlah</b> dengan tombol <span class="kbd">−</span> dan <span class="kbd">+</span>. Maksimal sesuai stok (paling banyak 20 per pesanan).</li>
+          <li><b>Isi catatan (opsional)</b>, misalnya <i>"minta profil nomor 2"</i>.</li>
+          <li><b>Periksa Total Bayar</b> (harga × jumlah).</li>
+          <li><b>Klik Beli Sekarang.</b> Jika belum login, tombolnya bertuliskan <b>Masuk untuk Membeli</b>. Login dulu, lalu kamu kembali ke halaman produk.</li>
+          <li><b>Pesanan dibuat.</b> Muncul jendela <i>"Pesanan Berhasil Dibuat"</i> berisi <b>kode pesanan</b> (contoh <code>IPS-260923-8F2C1A</code>).</li>
+        </ol>
+        <div class="note warn"><b class="t">Pesanan belum dibayar</b>Status pesanan masih <span class="pill amber">Menunggu</span>. Lanjutkan ke pembayaran (bab A5) agar akun bisa dikirim.</div>
+      </div>
+    </div>
+    <div class="phones" style="margin-top:4mm">
+      <figure><div class="phone"><div class="scr"><img src="img/buypanel-mobile.jpg" alt="" /></div></div><figcaption>Belum login: "Masuk untuk Membeli"</figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/buy-success.jpg" alt="" /></div></div><figcaption>Jendela "Pesanan Berhasil Dibuat"</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="ch newpage" id="u5">
+    <h2><span class="num">A5</span>Membayar via WhatsApp</h2>
+    <ol class="steps">
+      <li><b>Klik tombol hijau Bayar via WhatsApp</b> di jendela pesanan berhasil, atau di halaman detail pesanan.</li>
+      <li><b>WhatsApp terbuka</b> ke nomor admin <b>+62 889-8008-1680</b> dengan pesan yang sudah terisi otomatis. Cukup tekan <b>Kirim</b>, tidak perlu diubah.</li>
+      <li><b>Tunggu balasan admin</b> berisi cara pembayaran (transfer bank, e-wallet, atau QRIS).</li>
+      <li><b>Lakukan pembayaran</b> sesuai total, lalu <b>kirim bukti transfer</b> di chat yang sama.</li>
+      <li><b>Admin mengonfirmasi</b> pesananmu. Akun otomatis muncul di <b>Pesanan Saya</b> (bab A6).</li>
+    </ol>
+    <div class="wa">
+      <div class="bubble">Halo Admin IanPrem Store 👋
+Saya ingin melakukan pembayaran untuk pesanan berikut:
+
+🧾 Kode Pesanan: <b>IPS-260923-8F2C1A</b>
+📦 Produk: Netflix Premium Sharing
+🔢 Jumlah: 1
+💰 Total: <b>Rp 35.000</b>
+👤 Nama: Rizky Aditya
+📧 Email akun: rizky@gmail.com
+
+Mohon info metode pembayarannya. Terima kasih 🙏<span class="time">10.21 ✓✓</span></div>
+      <div class="bubble in">Halo kak Rizky 👋 Silakan transfer Rp 35.000 ke … lalu kirim bukti transfernya di sini ya.<span class="time">10.23</span></div>
+    </div>
+    <div class="note tip"><b class="t">Simpan kode pesanan</b>Kode pesanan (IPS-…) adalah "nomor resi" transaksimu. Sebutkan kode ini setiap kali menghubungi admin soal pesanan tersebut.</div>
+    <div class="note warn"><b class="t">Membuka dari komputer?</b>Jika aplikasi WhatsApp belum terpasang, halaman WhatsApp Web akan terbuka. Pesan juga bisa dikirim ulang kapan saja lewat <b>Pesanan Saya → pesanan terkait → Bayar via WhatsApp</b>.</div>
+  </section>
+
+  <section class="ch newpage" id="u6">
+    <h2><span class="num">A6</span>Pesanan Saya &amp; Menerima Akun</h2>
+    <p>Buka menu <b>Pesanan Saya</b> lewat ikon profil di kanan atas, atau lewat menu <span class="kbd">☰</span> di HP. Semua pesananmu tampil di sini, lengkap dengan tab <i>Semua / Menunggu / Selesai / Dibatalkan</i>.</p>
+    <div class="two">
+      <div class="mock">
+        <div class="t" style="font-size:11pt">Pesanan Saya</div>
+        <div class="s">Akun premium yang sudah dibeli akan muncul di sini</div>
+        <div class="card"><div class="row"><span class="t">Netflix Premium Sharing</span><span class="t">Rp 35.000</span></div><div class="s mono">IPS-260923-8F2C1A</div><div class="row" style="margin-top:1.5mm"><span class="s">23 Sep 2026, 10.20 • 1x</span><span class="badge b-green">✓ Selesai</span></div></div>
+        <div class="card"><div class="row"><span class="t">Spotify Premium Individual</span><span class="t">Rp 20.000</span></div><div class="s mono">IPS-260923-7A5F16</div><div class="row" style="margin-top:1.5mm"><span class="s">23 Sep 2026, 09.02 • 1x</span><span class="badge b-amber">⏱ Menunggu</span></div></div>
+        <div class="card"><div class="row"><span class="t">Canva Pro</span><span class="t">Rp 10.000</span></div><div class="s mono">IPS-260922-3C9D02</div><div class="row" style="margin-top:1.5mm"><span class="s">22 Sep 2026, 19.45 • 1x</span><span class="badge b-red">✕ Dibatalkan</span></div></div>
+        <p class="s" style="text-align:center;margin:3mm 0 0">Ilustrasi daftar pesanan</p>
+      </div>
+      <div class="mock">
+        <div class="row"><div><div class="s">Kode Pesanan</div><div class="t mono" style="font-size:10pt">IPS-260923-8F2C1A</div></div><span class="badge b-green">✓ Selesai</span></div>
+        <div class="t" style="margin-top:3mm">🔑 Akun Premium Kamu</div>
+        <div class="s">Jangan bagikan data akun ini ke orang lain</div>
+        <div class="acc">
+          <div style="color:#6ee7b7;font-weight:700">Akun #1</div>
+          <div class="field"><div><small>Email / Username</small><span>netflix.ian06@gmail.com</span></div><div class="copy">⧉</div></div>
+          <div class="field"><div><small>Password</small><span>Ianprem#2032</span></div><div class="copy">⧉</div></div>
+          <div class="field"><div><small>Profil</small><span>Profil 1</span></div><div class="copy">⧉</div></div>
+          <div class="field"><div><small>PIN</small><span>1111</span></div><div class="copy">⧉</div></div>
+        </div>
+        <p class="s" style="text-align:center;margin:3mm 0 0">Ilustrasi detail pesanan selesai</p>
+      </div>
+    </div>
+    <h3>Cara mengambil akun</h3>
+    <ol class="steps">
+      <li><b>Ketuk pesanan</b> yang berstatus <span class="pill green">✓ Selesai</span>.</li>
+      <li>Di bagian <b>Akun Premium Kamu</b>, data akun tampil lengkap: email, password, profil, PIN, atau link akses (sesuai produk).</li>
+      <li><b>Ketuk tombol salin ⧉</b> di samping setiap data untuk menyalinnya, lalu tempel di aplikasi terkait.</li>
+      <li>Jika ada <b>📌 catatan dari admin</b> (misalnya "jangan ubah password"), <b>patuhi</b> agar garansi tetap berlaku.</li>
+    </ol>
+    <h3>Pesanan masih "Menunggu"?</h3>
+    <div class="side">
+      <div class="mock">
+        <div class="banner"><div class="t">⏱ Menunggu Pembayaran</div><div class="s" style="margin-top:1mm">Silakan lakukan pembayaran melalui WhatsApp admin. Setelah dikonfirmasi, akun akan otomatis muncul di halaman ini.</div>
+          <div class="btn btn-wa" style="margin-top:2.5mm">💬 Bayar via WhatsApp</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2mm;margin-top:2mm"><div class="btn btn-ghost">↻ Cek Status</div><div class="btn btn-ghost" style="color:#fca5a5;border-color:rgba(239,68,68,.3)">✕ Batalkan</div></div>
+        </div>
+      </div>
+      <div>
+        <ul class="dots">
+          <li><b>Bayar via WhatsApp</b> membuka chat admin lagi.</li>
+          <li><b>Cek Status</b> memuat ulang halaman untuk melihat apakah admin sudah mengonfirmasi.</li>
+          <li><b>Batalkan</b> membatalkan pesanan jika kamu berubah pikiran (lihat bab A7).</li>
+        </ul>
+        <p class="muted">Bagian <i>Status</i> di bawah halaman menunjukkan urutan: Pesanan dibuat → Pembayaran dikonfirmasi → Akun terkirim, lengkap dengan tanggal dan jamnya.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch newpage" id="u7">
+    <h2><span class="num">A7</span>Membatalkan Pesanan</h2>
+    <ol class="steps">
+      <li>Buka <b>Pesanan Saya</b> lalu ketuk pesanan berstatus <span class="pill amber">Menunggu</span>.</li>
+      <li>Klik <b>Batalkan</b>, lalu pilih <b>OK</b> pada kotak konfirmasi.</li>
+      <li>Status berubah menjadi <span class="pill red">Dibatalkan</span> dengan keterangan <i>"Dibatalkan oleh pembeli"</i>.</li>
+    </ol>
+    <div class="note danger"><b class="t">Sudah terlanjur transfer?</b>Jangan membatalkan pesanan yang sudah kamu bayar. Hubungi admin via WhatsApp dengan menyebutkan kode pesanan. Pesanan yang sudah <b>Selesai</b> tidak bisa dibatalkan dari website.</div>
+
+    <h2 id="u8" style="margin-top:8mm"><span class="num">A8</span>Tips Aman &amp; Pertanyaan Umum</h2>
+    <ul class="dots">
+      <li><b>Jangan ubah email, password, profil, atau PIN</b> akun sharing kecuali diizinkan admin. Perubahan dapat membatalkan garansi.</li>
+      <li><b>Jangan bagikan data akun</b> ke orang lain.</li>
+      <li><b>Selalu bayar sesuai total</b> yang tertera, dan hanya melalui nomor admin resmi <b>+62 889-8008-1680</b>.</li>
+      <li><b>Gunakan password yang kuat</b> untuk akun IanPrem Store milikmu, dan jangan memberikannya kepada siapa pun, termasuk yang mengaku admin.</li>
+    </ul>
+    <table>
+      <tr><th>Pertanyaan</th><th>Jawaban</th></tr>
+      <tr><td>Berapa lama akun dikirim?</td><td>Biasanya 5–30 menit setelah pembayaran dikonfirmasi admin.</td></tr>
+      <tr><td>Metode pembayaran apa saja?</td><td>Diinformasikan admin di WhatsApp (transfer bank, e-wallet, atau QRIS).</td></tr>
+      <tr><td>Akun bermasalah atau tidak bisa login?</td><td>Hubungi admin via WhatsApp dengan kode pesanan. Produk bergaransi selama masa aktif.</td></tr>
+      <tr><td>Bisa beli lebih dari 1?</td><td>Bisa. Atur jumlah di panel beli (maksimal sesuai stok, hingga 20 per pesanan).</td></tr>
+      <tr><td>Kenapa tombol beli tidak bisa diklik?</td><td>Stok produk sedang habis. Tunggu restock atau tanyakan ke admin.</td></tr>
+      <tr><td>Di mana melihat akun yang sudah dibeli?</td><td>Menu <b>Pesanan Saya</b> → pilih pesanan berstatus Selesai.</td></tr>
+    </table>
+  </section>
+</div>
+
+<!-- ======================= BAGIAN B: ADMIN ======================= -->
+<div class="part">
+  <div class="part-head"><small>Bagian B</small><h1>Panduan Admin</h1><p>Untuk pemilik atau pengelola toko: menyiapkan katalog, mengisi stok akun, memproses pembayaran, dan memantau penjualan.</p></div>
+
+  <section class="ch" id="a1">
+    <h2><span class="num">B1</span>Menjadi Admin &amp; Masuk ke Panel</h2>
+    <p>Peran admin tidak bisa dipilih saat mendaftar, sehingga orang lain tidak bisa menjadikan dirinya admin. Aktifkan sekali saja lewat Supabase:</p>
+    <ol class="steps">
+      <li><b>Daftar akun biasa</b> di halaman <code>/register</code> menggunakan email Anda.</li>
+      <li>Buka <b>Supabase Dashboard → SQL Editor → New query</b>, lalu jalankan (ganti email):</li>
+    </ol>
+    <div class="sqlbox"><span class="k">update</span> public.profiles <span class="k">set</span> role = <span class="s">'admin'</span> <span class="k">where</span> email = <span class="s">'emailanda@gmail.com'</span>;</div>
+    <ol class="steps" start="3" style="counter-reset: s 2">
+      <li><b>Refresh website</b>, lalu klik ikon profil → <b>Dashboard Admin</b>, atau buka langsung <code>ian-prem-store.vercel.app/admin</code>.</li>
+    </ol>
+    <div class="note info"><b class="t">Menambah admin lain</b>Ulangi langkah 2 dengan email akun orang tersebut. Untuk mencabut akses, ganti <code>'admin'</code> menjadi <code>'user'</code>. Akun non-admin yang membuka /admin akan melihat halaman <i>"Akses Ditolak"</i>.</div>
+    <div class="side">
+      <div>
+        <h3>Navigasi panel admin</h3>
+        <table>
+          <tr><th>Menu</th><th>Fungsi</th></tr>
+          <tr><td>📊 Dashboard</td><td>Ringkasan penjualan &amp; grafik</td></tr>
+          <tr><td>🧾 Transaksi</td><td>Riwayat &amp; konfirmasi pesanan. Angka oranye menunjukkan jumlah pesanan yang menunggu.</td></tr>
+          <tr><td>📦 Produk</td><td>Tambah atau edit produk</td></tr>
+          <tr><td>🗂️ Kategori</td><td>Kelompok produk</td></tr>
+          <tr><td>🗄️ Gudang Akun</td><td>Stok akun yang akan dikirim</td></tr>
+          <tr><td>↗ Lihat Toko</td><td>Kembali ke tampilan pembeli</td></tr>
+        </table>
+        <p class="muted">Di desktop, menu ada di sidebar kiri. Di HP, ketuk <span class="kbd">☰</span> di kiri atas. Tombol keluar ada di bawah nama Anda.</p>
+      </div>
+      <figure><div class="phone"><div class="scr"><img src="img/admin-menu-mobile.jpg" alt="" /></div></div><figcaption>Menu admin di HP</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="ch newpage" id="a2">
+    <h2><span class="num">B2</span>Checklist Menyiapkan Toko</h2>
+    <p>Ikuti urutan ini saat pertama kali mengisi toko. Setiap langkah bergantung pada langkah sebelumnya.</p>
+    <div class="flow" style="grid-template-columns: repeat(4, 1fr)">
+      <div><div class="ic">🗂️</div><b>1. Kategori</b><small>Buat kelompok produk</small></div>
+      <div><div class="ic">📦</div><b>2. Produk</b><small>Harga, deskripsi &amp; kolom data akun</small></div>
+      <div><div class="ic">🗄️</div><b>3. Gudang Akun</b><small>Isi stok akun per produk</small></div>
+      <div><div class="ic">🚀</div><b>4. Siap Jual</b><small>Produk tampil &amp; bisa dibeli</small></div>
+    </div>
+    <div class="note warn"><b class="t">Produk tanpa stok tidak bisa dibeli</b>Jumlah stok di toko dihitung otomatis dari akun berstatus <i>Tersedia</i> di Gudang Akun. Jika stok 0, pembeli akan melihat "Stok Habis".</div>
+
+    <h2 id="a3" style="margin-top:7mm"><span class="num">B3</span>Mengelola Kategori</h2>
+    <figure><div class="panel"><img src="img/admin-categories-desktop.jpg" alt="" /></div><figcaption>Gambar 6. Halaman Kategori</figcaption></figure>
+  </section>
+
+  <section class="ch newpage">
+    <div class="side">
+      <div>
+        <h3>Menambah kategori</h3>
+        <ol class="steps">
+          <li>Buka <b>Kategori</b> → klik <b>Tambah Kategori</b>.</li>
+          <li><b>Nama Kategori</b>, misalnya "Streaming Film". <b>Slug (URL)</b> terisi otomatis.</li>
+          <li><b>Pilih ikon emoji</b> atau ketik emoji lain di kotak kecil.</li>
+          <li><b>Pilih warna</b> tema kartu kategori.</li>
+          <li>Isi <b>Deskripsi</b> singkat dan <b>Urutan</b> (angka kecil tampil lebih dulu).</li>
+          <li>Klik <b>Simpan</b>.</li>
+        </ol>
+        <h3>Edit &amp; hapus</h3>
+        <ul class="dots">
+          <li><b>Edit</b>: ubah data lalu Simpan.</li>
+          <li><b>Hapus 🗑</b>: produk di dalamnya <b>tidak ikut terhapus</b>, hanya menjadi "Tanpa kategori".</li>
+        </ul>
+      </div>
+      <figure><div class="panel"><img src="img/admin-category-form.jpg" alt="" /></div><figcaption>Form tambah kategori</figcaption></figure>
+    </div>
+
+    <h2 id="a4" style="margin-top:6mm"><span class="num">B4</span>Mengelola Produk</h2>
+    <figure><div class="panel"><img src="img/admin-products-desktop.jpg" alt="" /></div><figcaption>Gambar 7. Daftar produk: stok, terjual, sakelar aktif, unggulan, dan tombol aksi</figcaption></figure>
+  </section>
+
+  <section class="ch newpage">
+    <div class="side rev">
+      <figure><div class="panel"><img src="img/admin-product-form.jpg" alt="" /></div><figcaption>Form tambah produk</figcaption></figure>
+      <div>
+        <h3>Menambah produk</h3>
+        <ol class="steps">
+          <li>Buka <b>Produk</b> → klik <b>Tambah Produk</b>.</li>
+          <li>Isi semua kolom sesuai tabel di bawah.</li>
+          <li>Pilih <b>Data akun yang diberikan ke pembeli</b>. Ini penting karena menentukan kolom apa saja yang diisi di Gudang Akun.</li>
+          <li>Klik <b>Simpan Produk</b>, lalu lanjut isi stoknya lewat tombol <b>Stok</b>.</li>
+        </ol>
+        <div class="note tip"><b class="t">Gambar produk</b>Klik kotak <b>Upload</b> (maks. 2 MB, format JPG/PNG/WebP) atau tempel URL gambar. Tanpa gambar, kartu produk otomatis memakai emoji dan warna kategori.</div>
+      </div>
+    </div>
+    <table>
+      <tr><th>Kolom</th><th>Keterangan</th></tr>
+      <tr><td>Nama Produk</td><td>Contoh: "Netflix Premium Sharing". Slug URL dibuat otomatis.</td></tr>
+      <tr><td>Kategori</td><td>Kelompok produk (dari menu Kategori).</td></tr>
+      <tr><td>Harga Jual (Rp)</td><td>Harga yang dibayar pembeli. Isi angka saja, tanpa titik: <code>35000</code>.</td></tr>
+      <tr><td>Harga Coret (Rp)</td><td>Opsional. Harga normal untuk menampilkan label diskon (misal <code>54000</code> → -35%).</td></tr>
+      <tr><td>Durasi</td><td>Masa aktif, misalnya "1 Bulan" atau "3 Bulan".</td></tr>
+      <tr><td>Deskripsi</td><td>Penjelasan, aturan pemakaian, dan ketentuan garansi.</td></tr>
+      <tr><td>Keunggulan</td><td>Satu keunggulan per baris. Tampil sebagai daftar centang hijau.</td></tr>
+      <tr><td>Data akun</td><td>Pilih kolom yang relevan: <b>Email/Username, Password, Profil, PIN, Link Akses</b>. Contoh: Netflix memakai Email + Password + Profil + PIN, sedangkan Spotify via undangan memakai Email + Link Akses.</td></tr>
+      <tr><td>Tampilkan di toko</td><td>Jika dimatikan, produk disembunyikan dari pembeli.</td></tr>
+      <tr><td>Produk unggulan</td><td>Menampilkan label 🔥 Hot dan memprioritaskan produk di beranda.</td></tr>
+    </table>
+  </section>
+
+  <section class="ch newpage">
+    <h3 style="margin-top:0">Aksi di daftar produk</h3>
+    <table>
+      <tr><th>Tombol</th><th>Fungsi</th></tr>
+      <tr><td>Sakelar <b>Aktif</b></td><td>Tampilkan atau sembunyikan produk dari toko secara instan.</td></tr>
+      <tr><td>🔥 Unggulan</td><td>Tandai atau lepas status produk unggulan.</td></tr>
+      <tr><td>🗄️ Stok</td><td>Langsung membuka Gudang Akun untuk produk tersebut.</td></tr>
+      <tr><td>✏️ Edit</td><td>Ubah data produk. Perubahan harga <b>tidak</b> memengaruhi pesanan yang sudah dibuat.</td></tr>
+      <tr><td>🗑 Hapus</td><td>Menghapus produk beserta stok yang belum terjual.</td></tr>
+    </table>
+    <div class="note danger"><b class="t">Produk yang sudah pernah terjual tidak bisa dihapus</b>Aturan ini melindungi riwayat transaksi dan akun yang sudah dikirim ke pembeli. Jika muncul pesan <i>"Produk sudah memiliki transaksi"</i>, <b>matikan sakelar Aktif</b> saja untuk menyembunyikannya.</div>
+    <div class="phones">
+      <figure><div class="phone"><div class="scr"><img src="img/admin-products-mobile.jpg" alt="" /></div></div><figcaption>Daftar produk di HP (kartu)</figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/admin-stock-mobile.jpg" alt="" /></div></div><figcaption>Gudang Akun di HP</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="ch newpage" id="a5">
+    <h2><span class="num">B5</span>Gudang Akun (Stok)</h2>
+    <p>Gudang Akun menyimpan akun-akun yang siap dikirim. Setiap baris berisi <b>satu akun (atau satu slot profil)</b> yang akan diberikan ke satu pembeli.</p>
+    <figure><div class="panel"><img src="img/admin-stock-desktop.jpg" alt="" /></div><figcaption>Gambar 8. Gudang Akun: pilih produk, lihat jumlah tersedia dan terjual</figcaption></figure>
+    <h3>Menambah akun satu per satu</h3>
+    <div class="side">
+      <ol class="steps">
+        <li>Buka <b>Gudang Akun</b> (atau klik <b>Stok</b> di daftar produk), lalu pilih produknya di <b>Pilih Produk</b>.</li>
+        <li>Klik <b>Tambah Akun</b>.</li>
+        <li>Isi kolom yang muncul (sesuai pengaturan produk). <b>Semua kolom opsional</b>, jadi isi yang relevan saja. Klik <i>"Tampilkan semua kolom"</i> jika butuh kolom lain.</li>
+        <li>Isi <b>Catatan</b> jika perlu. Catatan ini <b>terlihat oleh pembeli</b>, misalnya "Aktif sampai 23 Okt 2026".</li>
+        <li>Klik <b>Simpan</b>. Stok produk bertambah otomatis.</li>
+      </ol>
+      <figure><div class="panel"><img src="img/admin-stock-add.jpg" alt="" /></div><figcaption>Form tambah akun</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="ch newpage">
+    <h3 style="margin-top:0">Menambah banyak akun sekaligus (massal)</h3>
+    <div class="side rev">
+      <figure><div class="panel"><img src="img/admin-stock-bulk.jpg" alt="" /></div><figcaption>Tambah akun massal</figcaption></figure>
+      <div>
+        <ol class="steps">
+          <li>Pilih produk → klik <b>Tambah Massal</b>.</li>
+          <li>Tulis <b>satu akun per baris</b>. Pisahkan setiap kolom dengan tanda <code>|</code> sesuai urutan yang tertera di jendela.</li>
+          <li>Kolom kosong cukup dibiarkan kosong di antara tanda <code>|</code>. Teks setelah kolom terakhir menjadi <b>Catatan</b>.</li>
+          <li>Periksa jumlah <i>"N akun akan ditambahkan"</i>, lalu klik <b>Simpan Semua</b>.</li>
+        </ol>
+      </div>
+    </div>
+    <p><b>Contoh:</b> produk Netflix (Email | Password | Profil | PIN), 1 akun dengan 3 profil:</p>
+    <div class="sqlbox">netflix.ian10@gmail.com|Ianprem#2036|Profil 1|1111
+netflix.ian10@gmail.com|Ianprem#2036|Profil 2|2222
+netflix.ian10@gmail.com|Ianprem#2036|Profil 3|3333|Aktif s/d 23 Okt</div>
+    <p><b>Contoh:</b> produk Canva (Email | Link Akses), akun tanpa password:</p>
+    <div class="sqlbox">pembeli@contoh.com|https://www.canva.com/brand/join?token=xxxx</div>
+    <h3>Fitur lain di Gudang Akun</h3>
+    <ul class="dots">
+      <li><b>Tab Tersedia / Terjual</b>: akun terjual menampilkan kode pesanan dan tanggal terjualnya.</li>
+      <li><b>Ikon 👁</b> di kanan atas tabel untuk menampilkan atau menyembunyikan password dan PIN (disembunyikan secara default).</li>
+      <li><b>Tombol salin</b> di setiap kolom, serta <b>pencarian</b> berdasarkan email, profil, catatan, atau kode pesanan.</li>
+      <li><b>Hapus</b> hanya tersedia untuk akun yang belum terjual.</li>
+    </ul>
+    <div class="note warn"><b class="t">Mengedit akun yang sudah terjual</b>Perubahan langsung terlihat oleh pembeli di halaman pesanannya. Fitur ini berguna untuk <b>mengganti akun bergaransi</b> (misalnya password akun berubah). Edit datanya, lalu kabari pembeli via WhatsApp.</div>
+  </section>
+
+  <section class="ch newpage" id="a6">
+    <h2><span class="num">B6</span>Memproses Transaksi</h2>
+    <p>Menu <b>Transaksi</b> berisi riwayat semua pesanan. Angka oranye di menu dan tab <i>Menunggu</i> menunjukkan pesanan yang perlu diproses.</p>
+    <figure><div class="panel"><img src="img/admin-orders-desktop.jpg" alt="" /></div><figcaption>Gambar 9. Riwayat Transaksi: filter status, pencarian, stok tersedia, dan tombol aksi</figcaption></figure>
+  </section>
+
+  <section class="ch">
+    <h3>SOP: dari chat WhatsApp sampai akun terkirim</h3>
+    <ol class="steps">
+      <li><b>Pembeli mengirim chat WhatsApp</b> berisi kode pesanan dan total (formatnya otomatis, lihat bab A5).</li>
+      <li><b>Cari kode pesanan</b> di kolom pencarian Transaksi dan pastikan produk, jumlah, dan total sama dengan chat.</li>
+      <li><b>Kirim info pembayaran</b> (rekening, e-wallet, atau QRIS) ke pembeli.</li>
+      <li><b>Pastikan dana benar-benar masuk</b> di rekening atau e-wallet Anda. Jangan hanya berpatokan pada foto bukti transfer.</li>
+      <li><b>Klik Konfirmasi</b> pada pesanan tersebut. Periksa kotak stok: harus <span class="pill green">✓ Stok tersedia</span>.</li>
+      <li>Tulis <b>catatan untuk pembeli</b> (opsional), misalnya "Jangan ubah password &amp; profil ya kak", lalu klik <b>Konfirmasi &amp; Kirim Akun</b>.</li>
+      <li><b>Selesai.</b> Sistem mengambil akun dari Gudang (yang paling lama disimpan lebih dulu), status berubah menjadi <span class="pill green">Selesai</span>, dan akun muncul di Pesanan Saya pembeli.</li>
+      <li><b>Balas chat pembeli</b>: "Sudah dikonfirmasi kak, akun bisa dilihat di menu Pesanan Saya 🙏".</li>
+    </ol>
+    <div class="two">
+      <figure><div class="panel"><img src="img/admin-confirm-modal.jpg" alt="" /></div><figcaption>Jendela Konfirmasi Pembayaran</figcaption></figure>
+      <figure><div class="panel"><img src="img/admin-cancel-modal.jpg" alt="" /></div><figcaption>Jendela Batalkan Pesanan</figcaption></figure>
+    </div>
+    <div class="note danger"><b class="t">"Stok akun tidak mencukupi"</b>Tombol konfirmasi tidak bisa diklik jika stok kurang dari jumlah pesanan. Tambahkan akun di <b>Gudang Akun</b> dulu, lalu buka Transaksi lagi dan klik <b>Konfirmasi</b>.</div>
+  </section>
+
+  <section class="ch">
+    <h3>Membatalkan, melihat detail &amp; export</h3>
+    <table>
+      <tr><th>Aksi</th><th>Cara &amp; kegunaan</th></tr>
+      <tr><td>✕ Batalkan</td><td>Untuk pesanan yang tidak dibayar. Isi alasan (terlihat oleh pembeli), lalu klik <b>Batalkan Pesanan</b>. Stok tidak berkurang.</td></tr>
+      <tr><td>👁 Detail</td><td>Menampilkan data pembeli (nama, email, No. HP), rincian pesanan, catatan, dan <b>akun yang sudah terkirim</b>.</td></tr>
+      <tr><td>Chat Pembeli</td><td>Tombol di jendela Detail untuk membuka WhatsApp ke nomor pembeli.</td></tr>
+      <tr><td>Export CSV</td><td>Mengunduh daftar transaksi sesuai filter aktif. File bisa dibuka di Excel atau Google Sheets untuk laporan.</td></tr>
+      <tr><td>Muat Ulang</td><td>Menampilkan pesanan terbaru tanpa me-refresh halaman.</td></tr>
+    </table>
+    <div class="side">
+      <figure><div class="panel"><img src="img/admin-order-detail.jpg" alt="" /></div><figcaption>Jendela Detail pesanan selesai</figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/admin-orders-mobile.jpg" alt="" /></div></div><figcaption>Transaksi di HP</figcaption></figure>
+    </div>
+    <div class="note tip"><b class="t">Proses dari HP</b>Semua langkah di atas bisa dilakukan dari HP. Tabel otomatis berubah menjadi kartu dengan tombol <b>Konfirmasi</b>, <b>Batal</b>, dan <b>Detail</b> yang mudah diketuk.</div>
+  </section>
+
+  <section class="ch newpage" id="a7">
+    <h2><span class="num">B7</span>Membaca Dashboard &amp; Grafik</h2>
+    <p>Dashboard adalah halaman pertama saat membuka panel admin. Gunakan tombol <b>7 Hari / 30 Hari / 90 Hari</b> di kanan atas untuk mengganti periode. Semua angka dan grafik ikut menyesuaikan.</p>
+    <figure><div class="panel"><img src="img/dashboard-desktop.jpg" alt="" /></div><figcaption>Gambar 10. Bagian atas Dashboard: kartu ringkasan &amp; grafik harian</figcaption></figure>
+    <table>
+      <tr><th>Kartu</th><th>Arti</th></tr>
+      <tr><td>Pendapatan</td><td>Total uang dari pesanan <b>Selesai</b> pada periode terpilih. Label ↗/↘ % membandingkannya dengan periode sebelumnya yang sama panjang. Baris kecil di bawahnya menunjukkan total sepanjang masa.</td></tr>
+      <tr><td>Pesanan Selesai</td><td>Jumlah pesanan yang dikonfirmasi, beserta rata-rata nilai per pesanan.</td></tr>
+      <tr><td>Menunggu Konfirmasi</td><td>Pesanan yang belum diproses. <b>Klik kartu ini</b> untuk langsung membuka daftarnya.</td></tr>
+      <tr><td>Total Pengguna</td><td>Jumlah pembeli terdaftar, serta jumlah akun yang siap dijual di gudang.</td></tr>
+    </table>
+  </section>
+
+  <section class="ch newpage">
+    <figure><div class="panel" style="max-height:150mm;overflow:hidden"><img src="img/dashboard-desktop-full.jpg" alt="" style="margin-top:-62%" /></div><figcaption>Gambar 11. Bagian bawah Dashboard: diagram status, kategori, produk terlaris, stok &amp; transaksi terbaru</figcaption></figure>
+    <table>
+      <tr><th>Grafik</th><th>Cara membaca</th></tr>
+      <tr><td>Pendapatan / Pesanan Harian</td><td>Grafik garis per hari. Ganti tampilan dengan tombol <i>Pendapatan</i> atau <i>Jumlah Pesanan</i>. Arahkan kursor (atau ketuk di HP) ke titik mana pun untuk melihat angka persisnya.</td></tr>
+      <tr><td>Status Pesanan</td><td>Diagram lingkaran perbandingan pesanan Selesai, Menunggu, dan Dibatalkan pada periode tersebut, lengkap dengan jumlah dan persentasenya.</td></tr>
+      <tr><td>Pendapatan per Kategori</td><td>Kontribusi tiap kategori terhadap pendapatan (4 kategori teratas, sisanya digabung menjadi "Lainnya").</td></tr>
+      <tr><td>Produk Terlaris</td><td>5 produk dengan pendapatan tertinggi, serta jumlah akun terjual.</td></tr>
+      <tr><td>Stok Gudang</td><td>Total akun siap jual dan terjual, serta produk aktif dengan stok paling sedikit. Label merah berarti <b>habis</b> atau tinggal ≤ 2.</td></tr>
+      <tr><td>Transaksi Terbaru</td><td>6 pesanan terakhir. Klik <b>Lihat Semua</b> untuk membuka menu Transaksi.</td></tr>
+    </table>
+  </section>
+
+  <section class="ch newpage" id="a8">
+    <h2><span class="num">B8</span>Tips Operasional Harian</h2>
+    <table>
+      <tr><th>Kapan</th><th>Yang dilakukan</th></tr>
+      <tr><td>Setiap ada chat WA</td><td>Cocokkan kode pesanan, cek dana masuk, lalu klik Konfirmasi (SOP bab B6).</td></tr>
+      <tr><td>Setiap pagi</td><td>Buka Dashboard dan cek <b>Menunggu Konfirmasi</b> serta <b>Stok Gudang</b> yang menipis.</td></tr>
+      <tr><td>Stok ≤ 2</td><td>Isi ulang lewat <b>Tambah Massal</b> agar pembeli tidak melihat "Stok Habis".</td></tr>
+      <tr><td>Pesanan tidak dibayar &gt; 1×24 jam</td><td>Batalkan dengan alasan "Pembayaran tidak diterima".</td></tr>
+      <tr><td>Produk tidak dijual lagi</td><td>Matikan sakelar <b>Aktif</b>, jangan dihapus.</td></tr>
+      <tr><td>Akun pembeli bermasalah (garansi)</td><td>Buka Gudang Akun → tab Terjual → cari kode pesanan → <b>Edit</b> data akun → kabari pembeli.</td></tr>
+      <tr><td>Akhir bulan</td><td>Transaksi → filter <i>Selesai</i> → <b>Export CSV</b> untuk laporan.</td></tr>
+    </table>
+    <div class="note warn"><b class="t">Project Supabase gratis bisa "tertidur"</b>Supabase menjeda project gratis yang tidak aktif selama 7 hari. Jika website tiba-tiba tidak menampilkan produk, login ke <b>supabase.com</b> → buka project → klik <b>Restore</b>.</div>
+    <div class="note info"><b class="t">Keamanan akun admin</b>Gunakan password yang kuat dan jangan login admin di perangkat umum. Klik ikon keluar di bawah nama Anda setelah selesai.</div>
+  </section>
+</div>
+
+<!-- ======================= LAMPIRAN ======================= -->
+<div class="part">
+  <div class="part-head"><small>Lampiran</small><h1>Referensi Cepat</h1><p>Solusi untuk pesan error yang paling sering muncul, beserta ringkasan status.</p></div>
+
+  <section class="ch" id="l1">
+    <h2><span class="num">L1</span>Pemecahan Masalah</h2>
+    <table>
+      <tr><th>Pesan / Gejala</th><th>Penyebab</th><th>Solusi</th></tr>
+      <tr><td>"Email atau password salah"</td><td>Data login keliru</td><td>Periksa huruf besar/kecil dan ketik ulang password. Pastikan email yang dipakai sama dengan saat mendaftar.</td></tr>
+      <tr><td>"Email sudah terdaftar"</td><td>Email sudah dipakai</td><td>Gunakan menu <b>Masuk</b>, bukan Daftar.</td></tr>
+      <tr><td>"Email belum dikonfirmasi"</td><td>Link konfirmasi belum diklik</td><td>Cek inbox/Spam lalu klik link konfirmasi. <i>Admin:</i> bisa mematikan "Confirm email" di Supabase → Authentication.</td></tr>
+      <tr><td>"Pendaftaran sedang ditutup"</td><td>Signup dimatikan di Supabase</td><td><i>Admin:</i> Supabase → Authentication → Sign In / Providers → aktifkan <b>Email provider</b> &amp; <b>Allow new users to sign up</b>.</td></tr>
+      <tr><td>"Terlalu banyak percobaan"</td><td>Batas email/login Supabase</td><td>Tunggu beberapa menit lalu coba lagi.</td></tr>
+      <tr><td>"Stok tidak mencukupi"</td><td>Stok kurang dari jumlah yang dibeli</td><td><i>Pembeli:</i> kurangi jumlah. <i>Admin:</i> tambah akun di Gudang.</td></tr>
+      <tr><td>"Stok akun tidak mencukupi" (saat konfirmasi)</td><td>Gudang kosong untuk produk itu</td><td>Tambahkan akun di Gudang Akun, lalu konfirmasi ulang.</td></tr>
+      <tr><td>"Produk sudah memiliki transaksi"</td><td>Menghapus produk yang pernah terjual</td><td>Matikan sakelar <b>Aktif</b>.</td></tr>
+      <tr><td>"Slug sudah dipakai"</td><td>URL produk atau kategori kembar</td><td>Ubah nama atau slug agar unik.</td></tr>
+      <tr><td>"Akses Ditolak" di /admin</td><td>Akun bukan admin</td><td>Jalankan SQL di bab B1 untuk akun tersebut.</td></tr>
+      <tr><td>"Pesanan sudah diproses sebelumnya"</td><td>Pesanan sudah dikonfirmasi atau dibatalkan (mungkin oleh admin lain)</td><td>Klik <b>Muat Ulang</b> untuk melihat status terbaru.</td></tr>
+      <tr><td>Produk tidak muncul sama sekali</td><td>Produk nonaktif, atau project Supabase dijeda</td><td>Cek sakelar Aktif. Jika semua kosong, <b>Restore</b> project di Supabase.</td></tr>
+      <tr><td>Gagal upload gambar</td><td>File &gt; 2 MB atau bukan gambar</td><td>Kompres gambar (misal di tinypng.com) atau tempel URL gambar.</td></tr>
+    </table>
+  </section>
+
+  <section class="ch avoid" id="l2">
+    <h2><span class="num">L2</span>Ringkasan Status Pesanan</h2>
+    <table>
+      <tr><th>Status</th><th>Terlihat oleh pembeli</th><th>Tindakan admin</th><th>Stok gudang</th></tr>
+      <tr><td><span class="pill amber">⏱ Menunggu</span></td><td>Tombol Bayar via WA, Cek Status, Batalkan</td><td>Konfirmasi atau Batalkan</td><td>Belum berkurang</td></tr>
+      <tr><td><span class="pill green">✓ Selesai</span></td><td>Data akun lengkap + catatan admin</td><td>Lihat detail, edit akun jika garansi</td><td>Berkurang sesuai jumlah</td></tr>
+      <tr><td><span class="pill red">✕ Dibatalkan</span></td><td>Alasan pembatalan</td><td>Tidak ada</td><td>Tidak berubah</td></tr>
+    </table>
+    <div class="note tip" style="margin-top:6mm"><b class="t">Butuh bantuan?</b>Hubungi admin IanPrem Store via WhatsApp <b>+62 889-8008-1680</b> atau tombol hijau WhatsApp di website <b>ian-prem-store.vercel.app</b>.</div>
+  </section>
+</div>
+
+</body>
+</html>
