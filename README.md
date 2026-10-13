@@ -15,7 +15,7 @@ Sumbernya ada di `docs/panduan/panduan.html` (bisa diedit lalu dicetak ulang ke 
 **Pengunjung / User**
 - Lihat kategori & produk tanpa login (preview publik)
 - Wajib login/daftar untuk membeli
-- Checkout → diarahkan ke WhatsApp admin (**+62 889-8008-1680**) dengan pesan otomatis berisi kode pesanan
+- Checkout → diarahkan ke WhatsApp admin (**+62 851-8471-8334**) dengan pesan otomatis berisi kode pesanan
 - Menu **Pesanan Saya**: status pesanan & detail akun (email, password, profil, PIN, link) muncul otomatis setelah admin konfirmasi
 - Bisa membatalkan pesanan yang masih menunggu
 
@@ -63,7 +63,7 @@ Buka http://localhost:3000
 3. Di **Environment Variables** isi:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - (opsional) `NEXT_PUBLIC_WHATSAPP_NUMBER` = `6288980081680`, `NEXT_PUBLIC_SITE_NAME`
+   - (opsional) tidak ada — nomor WhatsApp & nama toko diatur di `src/lib/config.ts`
 4. Klik **Deploy**.
 5. Kembali ke Supabase → **Authentication → URL Configuration**:
    - **Site URL**: `https://nama-project.vercel.app`
